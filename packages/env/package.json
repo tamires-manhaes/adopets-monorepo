@@ -1,0 +1,22 @@
+{
+  "name": "@adopets/env",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@t3-oss/env-nextjs": "^0.13.8",
+    "dotenv": "^17.2.0",
+    "zod": "^4.0.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.1.0",
+    "@adopets/typescript-config": "*",
+    "@adopets/eslint-config": "*"
+  }
+}
