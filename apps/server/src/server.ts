@@ -16,6 +16,9 @@ import { errorHandler } from "./error-handler.ts";
 import { loginWithPasswordRoute } from "./routes/auth/login-with-password.ts";
 import { requestPasswordRecoverRoute } from "./routes/auth/request-password-recover.ts";
 import { resetPasswordRoute } from "./routes/auth/reset-password.ts";
+import { createClientRoute } from "./routes/client/create-client.ts";
+import { getClientByIDRoute } from "./routes/client/get-client-by-id.ts";
+import { getClientsByStoreIDRoute } from "./routes/client/get-clients-by-store-id.ts";
 import { healthCheckRoute } from "./routes/health/status.ts";
 import { createNetworkRoute } from "./routes/network/create-network.ts";
 import { getNetworkByIDRoute } from "./routes/network/get-network-by-id.ts";
@@ -86,6 +89,9 @@ app.register(getStoresByNetworkIdRoute);
 app.register(getStoreByIDRoute);
 
 // -------- CLIENT --------
+app.register(createClientRoute);
+app.register(getClientsByStoreIDRoute);
+app.register(getClientByIDRoute);
 
 // -------- NETWORK --------
 app.register(createNetworkRoute);
