@@ -12,13 +12,6 @@ export const getClientByIDRoute: FastifyPluginCallbackZod = (app) => {
         params: z.object({
           id: z.string(),
         }),
-        body: z.object({
-          name: z.string(),
-          email: z.string().email(),
-          phone: z.string(),
-          address: z.string(),
-          createdAt: z.iso.datetime(),
-        }),
       },
     },
     async (request, reply) => {
