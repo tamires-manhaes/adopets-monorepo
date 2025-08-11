@@ -25,6 +25,10 @@ import { getNetworkByIDRoute } from "./routes/network/get-network-by-id.ts";
 import { createStoreRoute } from "./routes/store/create-store.ts";
 import { getStoreByIDRoute } from "./routes/store/get-store-by-id.ts";
 import { getStoresByNetworkIdRoute } from "./routes/store/get-stores-by-network-id.ts";
+import { createTransactionRoute } from "./routes/transaction/create-transaction.ts";
+import { getTransactionByIdRoute } from "./routes/transaction/get-transaction-by-id.ts";
+import { getTransactionsByStoreRoute } from "./routes/transaction/get-transactions-by-store.ts";
+import { updateTransactionRoute } from "./routes/transaction/update-transaction.ts";
 import { createUserRoute } from "./routes/user/create-user.ts";
 import { getAllUsersRoute } from "./routes/user/get-all-users.ts";
 import { getUserByIDRoute } from "./routes/user/get-by-id.ts";
@@ -96,6 +100,12 @@ app.register(getClientByIDRoute);
 // -------- NETWORK --------
 app.register(createNetworkRoute);
 app.register(getNetworkByIDRoute);
+
+// -------- TRANSACTION --------
+app.register(createTransactionRoute);
+app.register(getTransactionByIdRoute);
+app.register(getTransactionsByStoreRoute);
+app.register(updateTransactionRoute);
 
 app.listen({ port: env.PORT }).then(() => {
   console.log(`HTTP Server running at http://localhost:${env.PORT}`);

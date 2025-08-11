@@ -1,3 +1,4 @@
+
 generator client {
   provider = "prisma-client-js"
   // output   = "../src/generated/prisma"
@@ -12,6 +13,11 @@ enum UserRole {
   SUPERADMIN
   ADMIN
   EMPLOYEE
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
 }
 
 model Network {
@@ -38,6 +44,8 @@ model Store {
   sales         Sale[]
 
   @@index([networkId], name: "idx_network_id")
+  Transaction Transaction[]
+  Balance Balance[]
 }
 
 model User {
@@ -171,4 +179,30 @@ model PasswordResetToken {
 
   @@index([userId], map: "idx_user_id")
   @@index([token], map: "idx_token")
+}
+
+model Transaction {
+  id        String   @id @default(uuid())
+  storeId   String   @map("store_id")
+  type      TransactionType  @default(INCOME)
+  amount    Float
+  dateTime  DateTime @default(now())
+  createdAt DateTime @default(now())
+
+  store Store @relation(fields: [storeId], references: [id])
+
+  @@index([storeId], name: "idx_store_id_transaction")
+  @@map("transactions")
+}
+
+model Balance {
+  id        String   @id @default(uuid())
+  storeId   String   @map("store_id")
+  balance   Float
+  updatedAt DateTime @default(now())
+
+  store Store @relation(fields: [storeId], references: [id])
+
+  @@index([storeId], name: "idx_store_id_balance")
+  @@map("balances")
 }
