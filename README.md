@@ -1,135 +1,119 @@
-# Turborepo starter
+# Adopets Monorepo
 
-This Turborepo starter is maintained by the Turborepo core team.
+Este monorepo utiliza [Turborepo](https://turborepo.com/) para gerenciar múltiplos aplicativos e pacotes TypeScript de forma eficiente. Abaixo está a documentação detalhada das principais features e estrutura do projeto.
 
-## Using this example
+---
 
-Run the following command:
+## Estrutura do Projeto
+
+O monorepo está organizado em três principais diretórios dentro de `apps/`:
+
+- **docs/**: Aplicação Next.js para documentação.
+- **web/**: Aplicação Next.js/Vite para frontend principal.
+- **server/**: API backend em Node.js com Fastify e Prisma.
+
+Além disso, há pacotes compartilhados em `packages/` (ex: `@adopets/ui`, `@adopets/eslint-config`, `@adopets/typescript-config`).
+
+---
+
+## Principais Features
+
+### 1. **Frontend Web (`apps/web`)**
+
+- **Stack:** Next.js/Vite + React + TypeScript.
+- **Componentização:** Componentes reutilizáveis em `src/components/ui/`, incluindo Sidebar, Button, Input, etc.
+- **Hooks customizados:** Exemplo: `useIsMobile` para responsividade.
+- **Rotas e páginas:** Estruturadas em `src/pages/` e `src/routes/`.
+- **Store:** Gerenciamento de estado global em `src/store/`.
+- **Integração com backend:** Serviços em `src/service/` para comunicação com a API.
+- **Alias TypeScript:** Configuração de alias `@` para facilitar imports (`tsconfig.json`).
+- **Estilização:** CSS modular e integração com Tailwind (se aplicável).
+- **Testes:** Suporte a testes unitários e integração contínua.
+
+### 2. **Backend Server (`apps/server`)**
+
+- **Stack:** Node.js + Fastify + TypeScript.
+- **ORM:** Prisma para modelagem e acesso ao banco de dados.
+- **Autenticação:** Middleware de autenticação JWT em `middlewares/auth.ts`.
+- **Rotas REST:** Organizadas por domínio (`auth`, `user`, `product`, `transaction`, etc.) em `routes/`.
+- **Validação e tratamento de erros:** Centralizado em `src/error-handler.ts`.
+- **Env config:** Variáveis de ambiente em `src/env.ts`.
+- **Geradores utilitários:** Funções auxiliares em `src/utils/`.
+- **Migrations:** Controle de versões do banco via Prisma Migrations.
+- **Docker:** Suporte a desenvolvimento e deploy com Docker Compose.
+
+### 3. **Documentação (`apps/docs`)**
+
+- **Stack:** Next.js + TypeScript.
+- **Conteúdo:** Documentação dos módulos, APIs e features do projeto.
+- **Estático:** Assets e ícones em `public/`.
+
+### 4. **Pacotes Compartilhados**
+
+- **@adopets/eslint-config:** Configuração de linting para todo o monorepo.
+- **@adopets/typescript-config:** Configuração base do TypeScript para todos os apps/pacotes.
+
+---
+
+## Como rodar o projeto
+
+### Instalação
 
 ```sh
-npx create-turbo@latest
+pnpm install
 ```
-
-## What's inside?
-
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
 
 ### Build
 
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
+```sh
 pnpm exec turbo build
 ```
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+### Desenvolvimento
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
+```sh
 pnpm exec turbo dev
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+### Rodar apenas um app/pacote
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
+```sh
 pnpm exec turbo dev --filter=web
+pnpm exec turbo dev --filter=server
+pnpm exec turbo dev --filter=docs
 ```
 
-### Remote Caching
+---
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+## Principais Comandos
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+- **Build:** `pnpm exec turbo build`
+- **Dev:** `pnpm exec turbo dev`
+- **Testes:** `pnpm test` (em cada app/pacote)
+- **Lint:** `pnpm lint`
+- **Migrations Prisma:** `pnpm exec prisma migrate dev` (dentro de `apps/server`)
+- **Docker:** `docker-compose up` (dentro de `apps/server`)
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+---
 
-```
-cd my-turborepo
+## Remote Caching
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
+O Turborepo suporta cache remoto via Vercel para acelerar builds e CI/CD. Veja [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) para detalhes.
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
+---
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+## Links Úteis
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+- [Documentação Turborepo](https://turborepo.com/docs)
+- [Documentação Prisma](https://www.prisma.io/docs)
+- [Documentação Fastify](https://www.fastify.io/docs/latest/)
+- [Documentação Next.js](https://nextjs.org/docs)
+- [Documentação Vite](https://vitejs.dev/guide/)
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
+---
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
+## Observações
 
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+- Todas as aplicações e pacotes utilizam TypeScript.
+- O monorepo está pronto para CI/CD, testes e deploy em múltiplos ambientes.
+- Para dúvidas sobre componentes, consulte a documentação em `apps/docs`.
