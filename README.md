@@ -60,27 +60,49 @@ Além disso, há pacotes compartilhados em `packages/` (ex: `@adopets/ui`, `@ado
 ### Instalação
 
 ```sh
-pnpm install
+npm install
 ```
 
 ### Build
 
 ```sh
-pnpm exec turbo build
+npm run build
 ```
 
 ### Desenvolvimento
 
 ```sh
-pnpm exec turbo dev
+npm run dev
+```
+
+### Rodando o Backend (`apps/server`)
+
+Para iniciar o backend, siga os passos abaixo:
+
+1. **Configurar variáveis de ambiente:**  
+   Crie um arquivo `.env` em na raiz do projeto com as variáveis necessárias (exemplo: conexão com banco de dados, JWT secret, etc).  
+   Consulte o arquivo `.env.example` para referência.
+
+2. **Subir containers com Docker:**  
+   Execute o comando abaixo dentro de `apps/server/` para iniciar os serviços necessários (ex: banco de dados):
+
+```sh
+docker compose up -d
+```
+
+3. **Iniciar o servidor:**  
+   Com os containers rodando e as variáveis configuradas, execute:
+
+```sh
+npm run dev --filter=server
 ```
 
 ### Rodar apenas um app/pacote
 
 ```sh
-pnpm exec turbo dev --filter=web
-pnpm exec turbo dev --filter=server
-pnpm exec turbo dev --filter=docs
+npm run dev --filter=web
+npm run dev --filter=server
+npm run dev --filter=docs
 ```
 
 ---
